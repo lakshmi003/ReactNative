@@ -22,7 +22,7 @@ export default class Main extends Component {
                 <Image source={require('../images/photo.png')}></Image>
                 <View style={styles.buttonGroup}>
                     <Button onPress={() => this.goToScreen('signIn')} title="SIGN IN" style={styles.buttonColor} color="#ff4c00"></Button>
-                    <Button onPress={() => this.goToScreen('signUp')} title="SIGN UP" color="#ff4c00"></Button>                
+                    <Button onPress={() => this.goToScreen('signUp')} title="SIGN UP" style={styles.buttonColor} color="#ff4c00"></Button>                
                 </View>
             </View>
         );
@@ -30,7 +30,7 @@ export default class Main extends Component {
 
     goToScreen(screen) {
         if(screen == 'signIn') {
-            this.props.navigation.navigate('LoginScreen',{name : 'world', info : this.state})
+            this.props.navigation.navigate('HomeScreen',{name : 'world', info : this.state})
         } else {
             this.props.navigation.navigate('SignUpScreen',{name : 'world', info : this.state})
         }

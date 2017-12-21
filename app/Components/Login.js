@@ -40,7 +40,7 @@ export default class Login extends Component {
     deviceDetails() {
         console.log("Device Unique ID", DeviceInfo.getUniqueID());        
         console.log("this.state",this.state);
-        this.props.navigation.navigate('HomeScreen',{name : 'world', info : this.state})
+        this.props.navigation.navigate('VideoScreen',{name : 'world', info : this.state})
         
     }
 
