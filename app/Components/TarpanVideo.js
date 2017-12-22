@@ -20,14 +20,10 @@ export default class TarpanVideo extends Component {
     };*/    
 
     end(e) {
-        debugger;
-        console.log(this.state);
         this.setState({url : "https://s3.ap-south-1.amazonaws.com/arunprasad/Get+Hip+with+JHipster-+Spring+Boot+++AngularJS+++Bootstrap+by+Matt+Raible.mp4"});
     }
 
     render() {
-        const navigate = this.props.navigation;
-        console.log('Navigate ::', navigate);
         return (
             /*<View>
                 <Text>Home {navigate.state.params.name}</Text>
@@ -61,6 +57,7 @@ export default class TarpanVideo extends Component {
                 paused={false}               // Pauses playback entirely.
                 resizeMode="stretch"           // Fill the whole screen at aspect ratio.
                 repeat={false}
+                setControls={true}
                 controls = {true}
                 onEnd={this.end.bind(this)}           // Callback when playback finishes 
                 onError={this.videoError}

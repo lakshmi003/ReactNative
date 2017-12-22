@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, TouchableHighlight, Image} from 'react-native';
+import {View, TouchableHighlight, Image, StyleSheet} from 'react-native';
 
 export default class Home extends Component {
     
@@ -16,9 +16,48 @@ export default class Home extends Component {
 
     render() {
         return (
-            <TouchableHighlight onPress={() => this.goToScreen('video').bind(this)}>
-                <Image source={require('../images/starttarpan.png')}/>
-            </TouchableHighlight>
+            <View>
+                <View style={{alignItems : 'flex-end'}}>
+                    <Image source={require('../images/settings.png')}></Image>
+                </View>
+                <View style={style.align}>
+                    <View style={style.container}>
+                        <TouchableHighlight onPress={() => this.goToScreen('video')} style={style.imgBackground}>
+                            <Image source={require('../images/starttarpan.png')} style={{flex:1}}></Image>
+                        </TouchableHighlight>
+                        <TouchableHighlight onPress={() => this.goToScreen('video')} style={style.imgBackground}>
+                            <Image source={require('../images/guidedtour.png')}></Image>
+                        </TouchableHighlight>
+                    </View>
+                    <View style={style.container}>
+                        <TouchableHighlight onPress={() => this.goToScreen('video')} style={style.imgBackground}>
+                            <Image source={require('../images/horoscope.png')}></Image>
+                        </TouchableHighlight>
+                        <TouchableHighlight onPress={() => this.goToScreen('video')} style={style.imgBackground}>
+                            <Image source={require('../images/video.png')}></Image>
+                        </TouchableHighlight>
+                    </View>
+                </View>    
+            </View>
         );
     }
 }
+
+const style = StyleSheet.create({
+    imgBackground : {
+        backgroundColor: '#DDDDDD',
+        height:'100%'
+    },    
+    align : {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop : 45,
+    },
+    container : {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '55%',
+        paddingTop : 50        
+    }
+
+})

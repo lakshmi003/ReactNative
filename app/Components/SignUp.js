@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, TextInput, Button, StyleSheet, Picker, Image, ScrollView, Alert} from 'react-native'
+import {View, Text, TextInput, Button, StyleSheet, Picker, Image, ScrollView, Alert, KeyboardAvoidingView} from 'react-native'
 import DeviceInfo from 'react-native-device-info';
 
 export default class SignUp extends Component {
@@ -68,25 +68,27 @@ export default class SignUp extends Component {
     render() {
         return(
             <ScrollView>
-                <View style={styles.align}>
-                    <Image source={require('../images/photo.png')}></Image>
-                </View>    
-                <View style={styles.container}>
-                    <View style={styles.rowPadded}>
-                        <Text>Country</Text>
-                        <Picker
-                            selectedValue={this.state.country}
-                            onValueChange={(itemValue, itemIndex) => this.setState({country: itemValue})}>
-                            <Picker.Item label="India" value="india" />
-                            <Picker.Item label="United States" value="us" />
-                        </Picker>
+                <KeyboardAvoidingView behavior="position">   
+                    <View style={styles.align}>
+                        <Image source={require('../images/photo.png')}></Image>
+                    </View>    
+                    <View style={styles.container}>
+                        <View style={styles.rowPadded}>
+                            <Text>Country</Text>
+                            <Picker
+                                selectedValue={this.state.country}
+                                onValueChange={(itemValue, itemIndex) => this.setState({country: itemValue})}>
+                                <Picker.Item label="India" value="india" />
+                                <Picker.Item label="United States" value="us" />
+                            </Picker>
+                        </View>
+                        <View style={styles.rowPadded}>
+                            <Text>Phone</Text>
+                            <TextInput value={this.state.mobileNo} onChangeText={(value)=> this.onChangeText(value)} keyboardType="numeric" onSubmitEditing={this.submit.bind(this)}></TextInput>
+                        </View>
+                        {this.renderVerificationCodeElements()}
                     </View>
-                    <View style={styles.rowPadded}>
-                        <Text>Phone</Text>
-                        <TextInput value={this.state.mobileNo} onChangeText={(value)=> this.onChangeText(value)} keyboardType="numeric" onSubmitEditing={this.submit.bind(this)}></TextInput>
-                    </View>
-                    {this.renderVerificationCodeElements()}
-                </View>
+                </KeyboardAvoidingView>
             </ScrollView>
         );
     }
