@@ -9,10 +9,7 @@ export default class SignUp extends Component {
         this.state = {
             country : '',
             mobileNo: '',
-            code1:'',
-            code2:'',
-            code3:'',
-            code4:'',
+            code:'',
             showVerificationElements : false
         };
         this.deviceId = DeviceInfo.getUniqueID();
@@ -23,11 +20,8 @@ export default class SignUp extends Component {
             return(
                 <View style={styles.rowPadded}>
                     <Text>OTP</Text>
-                    <View style={styles.groupText}>
-                        <TextInput onChangeText={(value) => this.setState({code1 : value})} keyboardType="numeric" style={[styles.otp, styles.textInput]}></TextInput>
-                        <TextInput onChangeText={(value) => this.setState({code2 : value})} keyboardType="numeric" style={[styles.otp, styles.textInput]}></TextInput>
-                        <TextInput onChangeText={(value) => this.setState({code3 : value})} keyboardType="numeric" style={[styles.otp, styles.textInput]}></TextInput>
-                        <TextInput onChangeText={(value) => this.setState({code4 : value})} keyboardType="numeric" style={[styles.otp, styles.textInput]}></TextInput>
+                    <View>
+                        <TextInput onChangeText={(value) => this.setState({code : value})} keyboardType="numeric" style={styles.textInput}></TextInput>
                     </View>
                     <View style={styles.rowPadded}>
                         <Button onPress={this.verifyOTP.bind(this)} title="VERIFY" style={styles.buttonColor} color='#ff4c00'></Button>
@@ -53,7 +47,7 @@ export default class SignUp extends Component {
             body: JSON.stringify({
                 MobileNo: this.state.mobileNo,
                 DeviceId: this.deviceId,
-                code : this.state.code1 + this.state.code2 +this.state.code3 +this.state.code4 
+                code : this.state.code
             })
         }).then(
             response => response.json()
@@ -139,7 +133,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#ff4c00'
     },
     rowPadded : {
-        padding : 3
+        padding : 6
     },
     groupText : {
         flexDirection: 'row',
@@ -150,8 +144,5 @@ const styles = StyleSheet.create({
         height : Platform.OS === 'ios' ? 45 : null,
         borderBottomWidth: Platform.OS === 'ios' ? 1 : null,
         borderColor: 'gray'
-    },
-    otp : {
-        flex:1
-    }
+    }   
 });

@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#ff4c00'
     },
     rowPadded : {
-        padding : 3
+        padding : 15
     },
     textInput: {
         height : Platform.OS === 'ios' ? 45 : null,
