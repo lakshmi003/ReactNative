@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, TouchableHighlight, Image, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, Image, StyleSheet} from 'react-native';
 
 export default class Home extends Component {
     
@@ -9,7 +9,7 @@ export default class Home extends Component {
                 this.props.navigation.navigate('VideoScreen');
                 break;
             case "horoscope":
-                this.props.navigation.navigate('VideoScreen');
+                this.props.navigation.navigate('horoscopeScreen');
                 break;    
         }
     }
@@ -22,20 +22,20 @@ export default class Home extends Component {
                 </View>
                 <View style={style.align}>
                     <View style={style.container}>
-                        <TouchableHighlight onPress={() => this.goToScreen('video')} style={style.imgBackground}>
+                        <TouchableOpacity onPress={() => this.goToScreen('video')} style={style.imgBackground}>
                             <Image source={require('../images/starttarpan.png')} style={{flex:1}}></Image>
-                        </TouchableHighlight>
-                        <TouchableHighlight onPress={() => this.goToScreen('video')} style={style.imgBackground}>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.goToScreen('video')} style={style.imgBackground}>
                             <Image source={require('../images/guidedtour.png')}></Image>
-                        </TouchableHighlight>
+                        </TouchableOpacity>
                     </View>
                     <View style={style.container}>
-                        <TouchableHighlight onPress={() => this.goToScreen('video')} style={style.imgBackground}>
+                        <TouchableOpacity onPress={() => this.goToScreen('horoscope')} style={style.imgBackground}>
                             <Image source={require('../images/horoscope.png')}></Image>
-                        </TouchableHighlight>
-                        <TouchableHighlight onPress={() => this.goToScreen('video')} style={style.imgBackground}>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.goToScreen('video')} style={style.imgBackground}>
                             <Image source={require('../images/video.png')}></Image>
-                        </TouchableHighlight>
+                        </TouchableOpacity>
                     </View>
                 </View>    
             </View>

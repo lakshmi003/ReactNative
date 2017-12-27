@@ -6,6 +6,8 @@ import SignUp from './app/Components/SignUp';
 import Register from './app/Components/Register';
 import TarpanVideo from './app/Components/TarpanVideo'
 import Home from './app/Components/Home';
+import Horoscope from './app/Components/Horoscope';
+import HoroscopeResult from './app/Components/HoroscopeResult';
 
 export default class App extends Component {
   render() {
@@ -21,5 +23,7 @@ const AppNavigator = StackNavigator({
   LoginScreen: {screen: Login},
   RegisterScreen: { screen: Register},
   VideoScreen: { screen: TarpanVideo},
-  HomeScreen: { screen: Home}
+  HomeScreen: { screen: Home},
+  horoscopeScreen: {screen: Horoscope},
+  horoscopeResultScreen: {screen: HoroscopeResult}
 })

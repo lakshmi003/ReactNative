@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
-import {AppRegistry, Text, View, Button, TextInput, Image} from 'react-native';
+import {ScrollView, Text, View, Button, TextInput, Image, KeyboardAvoidingView, StyleSheet, Alert} from 'react-native';
 import DeviceInfo from 'react-native-device-info'
 
 export default class Login extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            name : 'andriod',
-            message: this.props.message,
             mobileNo: '',
             password: ''
         }
+        this.deviceId = DeviceInfo.getUniqueID();
     }
 
     static navigationOptions = {
@@ -21,34 +20,82 @@ export default class Login extends Component {
         }
     };
 
-    static defaultProps = {message:'Hi There'}
-
     render() {
-        console.log('HELLO');
         return(
-            <View>
-                <Image source={require('../images/photo.png')}></Image>
-                <Text>Mobile No.</Text>
-                <TextInput value={this.state.mobileNo} keyboardType="numeric" onChangeText={(value) => this.onChangeText(value, 'mobileNo')}></TextInput>
-                <Text>Password</Text>
-                <TextInput value={this.state.password} onChangeText={(value) => this.onChangeText(value, 'password')}></TextInput>
-                <Button onPress={this.deviceDetails.bind(this)} title="Test"></Button>
-            </View>    
+            <ScrollView>
+                <KeyboardAvoidingView behavior="position">   
+                    <View style={styles.align}>
+                        <Image source={require('../images/photo.png')}></Image>
+                    </View>    
+                    <View>
+                        <View style={styles.rowPadded}>
+                            <Text>Phone</Text>
+                            <TextInput value={this.state.mobileNo} onChangeText={(value)=> this.onChangeText('mobileNo',value)} keyboardType="numeric"></TextInput>
+                        </View>
+                    </View>
+                    <View>
+                        <View style={styles.rowPadded}>
+                            <Text>Password</Text>
+                            <TextInput value={this.state.password} onChangeText={(value)=> this.onChangeText('password',value)}></TextInput>
+                        </View>
+                    </View>
+                    <View style={styles.rowPadded}>
+                        <Button onPress={() => this.login()} title="LOGIN" style={styles.buttonColor} color='#ff4c00'></Button>
+                    </View>
+                </KeyboardAvoidingView>
+            </ScrollView>    
         );
     }
 
-    deviceDetails() {
-        console.log("Device Unique ID", DeviceInfo.getUniqueID());        
-        console.log("this.state",this.state);
-        this.props.navigation.navigate('VideoScreen',{name : 'world', info : this.state})
-        
-    }
-
-    onChangeText(value,  fieldName) {
+    onChangeText(fieldName, value) {
         this.setState({
             mobileNo: fieldName == 'mobileNo' ?  value : this.state.mobileNo,
             password: fieldName == 'password' ?  value : this.state.password
         });
     }
+
+    login() {
+        fetch('https://jyo7uw3v6f.execute-api.us-east-1.amazonaws.com/tarpan_login',{
+            method : 'POST',
+            headers:{
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify ({
+                DeviceId : this.deviceId,
+                MobileNo : this.state.mobileNo,
+                Password: this.state.password                
+            })
+        }).then(
+            response => response.json()
+        ).then(
+            result => {
+                if(result.success){
+                    Alert.alert(result.message);
+                    this.props.navigation.navigate('HomeScreen',{deviceId:this.deviceId, mobileNo:this.mobileNo})
+                } else {
+                    Alert.alert(result.message);
+                }
+            }
+        )           
+    }
 }
 
+const styles = StyleSheet.create({
+    align : {
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding : 15        
+    },    
+    buttonColor: {
+        backgroundColor:'#ff4c00'
+    },
+    rowPadded : {
+        padding : 3
+    },
+    groupText : {
+        flexDirection: 'row',
+        justifyContent: 'space-between',        
+        padding : 3
+    }
+});

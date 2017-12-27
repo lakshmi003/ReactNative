@@ -35,7 +35,11 @@ export default class SignUp extends Component {
                 </View>
             );
         } else {
-            return null;
+            return (
+                <View style={styles.rowPadded}>
+                    <Button onPress={this.submit.bind(this)} title="SendOTP" style={styles.buttonColor} color='#ff4c00'></Button>
+                </View>
+            );
         }        
     }
 
@@ -84,7 +88,7 @@ export default class SignUp extends Component {
                         </View>
                         <View style={styles.rowPadded}>
                             <Text>Phone</Text>
-                            <TextInput value={this.state.mobileNo} onChangeText={(value)=> this.onChangeText(value)} keyboardType="numeric" onSubmitEditing={this.submit.bind(this)}></TextInput>
+                            <TextInput value={this.state.mobileNo} onChangeText={(value)=> this.onChangeText(value)} keyboardType="numeric"></TextInput>
                         </View>
                         {this.renderVerificationCodeElements()}
                     </View>
