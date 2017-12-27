@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, TextInput, Button, Image, View, StyleSheet, ScrollView, Alert} from 'react-native';
+import {Text, TextInput, Button, Image, View, StyleSheet, ScrollView, Alert, KeyboardAvoidingView, Platform} from 'react-native';
 
 export default class Register extends Component {
     constructor(props) {
@@ -54,24 +54,26 @@ export default class Register extends Component {
     render() {
         return(
             <ScrollView>
-                <View style={styles.align}>
-                    <Image source={require('../images/photo.png')}></Image>
-                </View>
-                <View style={styles.rowPadded}>
-                    <Text>Name</Text>
-                    <TextInput onChangeText={(value) => this.onChangeText(value, 'name')}></TextInput>
-                </View>
-                <View style={styles.rowPadded}>
-                    <Text>Email</Text>
-                    <TextInput onChangeText={(value) => this.onChangeText(value, 'email')}></TextInput>
-                </View>
-                <View style={styles.rowPadded}>
-                    <Text>Password</Text>
-                    <TextInput onChangeText={(value) => this.onChangeText(value, 'password')} secureTextEntry={true}></TextInput>
-                </View>
-                <View style={styles.rowPadded}>
-                    <Button onPress={this.goToLoginScreen.bind(this)} title="LOGIN" style={styles.buttonColor} color='#ff4c00'></Button>
-                </View>
+                <KeyboardAvoidingView behavior="position">
+                    <View style={styles.align}>
+                        <Image source={require('../images/photo.png')}></Image>
+                    </View>
+                    <View style={styles.rowPadded}>
+                        <Text>Name</Text>
+                        <TextInput onChangeText={(value) => this.onChangeText(value, 'name')} style={styles.textInput}></TextInput>
+                    </View>
+                    <View style={styles.rowPadded}>
+                        <Text>Email</Text>
+                        <TextInput onChangeText={(value) => this.onChangeText(value, 'email')} style={styles.textInput}></TextInput>
+                    </View>
+                    <View style={styles.rowPadded}>
+                        <Text>Password</Text>
+                        <TextInput onChangeText={(value) => this.onChangeText(value, 'password')} secureTextEntry={true} style={styles.textInput}></TextInput>
+                    </View>
+                    <View style={styles.rowPadded}>
+                        <Button onPress={this.goToLoginScreen.bind(this)} title="LOGIN" style={styles.buttonColor} color='#ff4c00'></Button>
+                    </View>
+               </KeyboardAvoidingView>    
             </ScrollView>            
         );
     }
@@ -88,5 +90,10 @@ const styles = StyleSheet.create({
     },
     rowPadded : {
         padding : 3
+    },
+    textInput: {
+        height : Platform.OS === 'ios' ? 45 : null,
+        borderBottomWidth: Platform.OS === 'ios' ? 1 : null,
+        borderColor: 'gray'
     }
 });

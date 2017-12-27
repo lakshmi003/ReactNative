@@ -9,7 +9,6 @@ export default class HoroscopeResult extends Component {
     }
 
     componentWillMount() {
-        //let horoscopeName = 
         fetch('http://sandipbgt.com/theastrologer/api/horoscope/'+this.props.navigation.state.params.name+'/today/')
         .then((response) => response.json())
         .then((responseJson) => {

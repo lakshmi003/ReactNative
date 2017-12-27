@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ScrollView, Text, View, Button, TextInput, Image, KeyboardAvoidingView, StyleSheet, Alert} from 'react-native';
+import {ScrollView, Text, View, Button, TextInput, Image, KeyboardAvoidingView, StyleSheet, Alert, Platform} from 'react-native';
 import DeviceInfo from 'react-native-device-info'
 
 export default class Login extends Component {
@@ -30,13 +30,13 @@ export default class Login extends Component {
                     <View>
                         <View style={styles.rowPadded}>
                             <Text>Phone</Text>
-                            <TextInput value={this.state.mobileNo} onChangeText={(value)=> this.onChangeText('mobileNo',value)} keyboardType="numeric"></TextInput>
+                            <TextInput value={this.state.mobileNo} onChangeText={(value)=> this.onChangeText('mobileNo',value)} keyboardType="numeric" style={styles.textInput}></TextInput>
                         </View>
                     </View>
                     <View>
                         <View style={styles.rowPadded}>
                             <Text>Password</Text>
-                            <TextInput value={this.state.password} onChangeText={(value)=> this.onChangeText('password',value)}></TextInput>
+                            <TextInput value={this.state.password} onChangeText={(value)=> this.onChangeText('password',value)} style={styles.textInput}></TextInput>
                         </View>
                     </View>
                     <View style={styles.rowPadded}>
@@ -97,5 +97,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',        
         padding : 3
+    },
+    textInput: {
+        height : Platform.OS === 'ios' ? 45 : null,
+        borderBottomWidth: Platform.OS === 'ios' ? 1 : null,
+        borderColor: 'gray'
     }
 });
