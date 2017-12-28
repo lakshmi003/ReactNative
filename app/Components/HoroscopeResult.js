@@ -1,18 +1,30 @@
 import React, {Component} from 'react';
-import {Text, Alert, StyleSheet} from 'react-native';
+import {Text, Alert, StyleSheet, View} from 'react-native';
 
 export default class HoroscopeResult extends Component {
 
     constructor() {
         super();
-        this.state = {description: ''}
+        this.state = {
+            description: '',
+            intensity: '',
+            keywords: '',
+            mood: ''
+        }
     }
 
     componentWillMount() {
         fetch('http://sandipbgt.com/theastrologer/api/horoscope/'+this.props.navigation.state.params.name+'/today/')
         .then((response) => response.json())
         .then((responseJson) => {
-            this.setState({description : responseJson.horoscope})
+            console.log(responseJson);
+            let index = responseJson.horoscope.lastIndexOf('(c)');
+            this.setState({
+                description : (responseJson.horoscope).slice(0,index),
+                intensity : responseJson.meta.intensity,
+                keywords : responseJson.meta.keywords,
+                mood : responseJson.meta.mood
+            })            
         })
         .catch((error) => {
             Alert.alert.error(error);
@@ -21,7 +33,16 @@ export default class HoroscopeResult extends Component {
 
     render() {
         return (
-            <Text style={styles.text}>{this.state.description}</Text>
+            <View>
+                <View>
+                    <Text style={styles.text}>{this.state.description}</Text>
+                </View>
+                <View style={styles.group}>
+                    <Text style={styles.text}>Intensity: {this.state.intensity}</Text>
+                    <Text style={styles.text}>Keywords: {this.state.keywords}</Text>
+                    <Text style={styles.text}>Mood: {this.state.mood}</Text>
+                </View>
+            </View>    
         );
     }
 }
@@ -31,5 +52,9 @@ const styles = StyleSheet.create({
         textAlign: 'justify',
         lineHeight: 30,
         padding:5
+    },
+    group: {
+        alignItems : 'flex-end',
+        paddingTop : 70
     }
 })
