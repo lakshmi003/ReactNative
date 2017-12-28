@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, TextInput, Button, StyleSheet, Picker, Image, ScrollView, Alert, KeyboardAvoidingView, Platform} from 'react-native'
+import {View, Text, TextInput, Button, StyleSheet, Picker, Image, ScrollView, Alert, KeyboardAvoidingView, Platform, ActionSheetIOS} from 'react-native'
 import DeviceInfo from 'react-native-device-info';
 
 export default class SignUp extends Component {
@@ -15,6 +15,7 @@ export default class SignUp extends Component {
         this.deviceId = DeviceInfo.getUniqueID();
     }
 
+    //let countryOption = ['India','United States','Cancel'];
     renderVerificationCodeElements() {
         if(this.state.showVerificationElements) {
             return(
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#ff4c00'
     },
     rowPadded : {
-        padding : 6
+        padding : Platform.OS === 'ios' ? 6 : 3
     },
     groupText : {
         flexDirection: 'row',

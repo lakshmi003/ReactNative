@@ -60,15 +60,17 @@ export default class Register extends Component {
                     </View>
                     <View style={styles.rowPadded}>
                         <Text>Name</Text>
-                        <TextInput onChangeText={(value) => this.onChangeText(value, 'name')} style={styles.textInput}></TextInput>
+                        <TextInput onChangeText={(value) => this.onChangeText(value, 'name')} style={styles.textInput}
+                        returnKeyType = {"next"} onSubmitEditing={(event) => { this.refs.email.focus(); }}></TextInput>
                     </View>
                     <View style={styles.rowPadded}>
                         <Text>Email</Text>
-                        <TextInput onChangeText={(value) => this.onChangeText(value, 'email')} style={styles.textInput}></TextInput>
+                        <TextInput ref="email" onChangeText={(value) => this.onChangeText(value, 'email')} style={styles.textInput}
+                        returnKeyType = {"next"} onSubmitEditing={(event) => { this.refs.password.focus(); }}></TextInput>
                     </View>
                     <View style={styles.rowPadded}>
                         <Text>Password</Text>
-                        <TextInput onChangeText={(value) => this.onChangeText(value, 'password')} secureTextEntry={true} style={styles.textInput}></TextInput>
+                        <TextInput ref="password" onChangeText={(value) => this.onChangeText(value, 'password')} secureTextEntry={true} style={styles.textInput}></TextInput>
                     </View>
                     <View style={styles.rowPadded}>
                         <Button onPress={this.goToLoginScreen.bind(this)} title="LOGIN" style={styles.buttonColor} color='#ff4c00'></Button>
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#ff4c00'
     },
     rowPadded : {
-        padding : 15
+        padding : Platform.OS === 'ios' ? 15 : 3
     },
     textInput: {
         height : Platform.OS === 'ios' ? 45 : null,

@@ -30,13 +30,14 @@ export default class Login extends Component {
                     <View>
                         <View style={styles.rowPadded}>
                             <Text>Phone</Text>
-                            <TextInput value={this.state.mobileNo} onChangeText={(value)=> this.onChangeText('mobileNo',value)} keyboardType="numeric" style={styles.textInput}></TextInput>
+                            <TextInput value={this.state.mobileNo} onChangeText={(value)=> this.onChangeText('mobileNo',value)} keyboardType="numeric" style={styles.textInput}
+                                returnKeyType = {"next"} onSubmitEditing={(event) => { this.refs.password.focus(); }}></TextInput>
                         </View>
                     </View>
                     <View>
                         <View style={styles.rowPadded}>
                             <Text>Password</Text>
-                            <TextInput value={this.state.password} onChangeText={(value)=> this.onChangeText('password',value)} style={styles.textInput}></TextInput>
+                            <TextInput ref='password' value={this.state.password} onChangeText={(value)=> this.onChangeText('password',value)} style={styles.textInput}></TextInput>
                         </View>
                     </View>
                     <View style={styles.rowPadded}>
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#ff4c00'
     },
     rowPadded : {
-        padding : 15
+        padding : Platform.OS === 'ios' ? 15 : 3
     },
     groupText : {
         flexDirection: 'row',
