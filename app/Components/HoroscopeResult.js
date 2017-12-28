@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, Alert} from 'react-native';
+import {Text, Alert, StyleSheet} from 'react-native';
 
 export default class HoroscopeResult extends Component {
 
@@ -21,7 +21,15 @@ export default class HoroscopeResult extends Component {
 
     render() {
         return (
-            <Text>{this.state.description}</Text>
+            <Text style={styles.text}>{this.state.description}</Text>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    text: {        
+        textAlign: 'justify',
+        lineHeight: 30,
+        padding:5
+    }
+})
