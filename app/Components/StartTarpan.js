@@ -41,7 +41,6 @@ export default class StartTarpan extends Component {
         ).then(
             result => {
                 if(result.success){
-                    Alert.alert(result.message);
                     this.props.navigation.navigate('VideoScreen',{DeviceId : this.deviceId, MobileNo : this.mobileNo, Info: {Country: this.state.country, IsYourMotherAlive: this.state.isMotherAlive}})
                 } else {
                     Alert.alert(result.message);                    
@@ -120,7 +119,7 @@ export default class StartTarpan extends Component {
                 <View>
                     <Text style={style.rowPadded}>Vedam</Text>
                     <View style={style.align}>
-                        <View style={[style.container,style.col]}>
+                        <View style={style.container}>
                             <TouchableOpacity onPress={() => this.setSelectedvedam('rig')} style={[style.box, style.vedamBox, {backgroundColor:vedam.rigBg}]}>
                                 <Text style={{color:vedam.rigTc}}>RIG</Text>
                             </TouchableOpacity>
@@ -187,7 +186,7 @@ export default class StartTarpan extends Component {
                 <View>
                     <Text style={style.rowPadded}>Caste</Text>
                     <View style={style.align}>
-                        <View style={[style.container,style.col]}>
+                        <View style={[style.container]}>
                             <TouchableOpacity onPress={() => this.setSelectedCaste('iyer')} style={[style.box,{backgroundColor: caste.iyerBg}]}>
                                 <Text style={{color:caste.iyerTc}}>IYER</Text>
                             </TouchableOpacity>
