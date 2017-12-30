@@ -17,7 +17,6 @@ export default class HoroscopeResult extends Component {
         fetch('http://sandipbgt.com/theastrologer/api/horoscope/'+this.props.navigation.state.params.name+'/today/')
         .then((response) => response.json())
         .then((responseJson) => {
-            console.log(responseJson);
             let index = responseJson.horoscope.lastIndexOf('(c)');
             this.setState({
                 description : (responseJson.horoscope).slice(0,index),
@@ -46,7 +45,6 @@ export default class HoroscopeResult extends Component {
         );
     }
 }
-
 const styles = StyleSheet.create({
     text: {        
         textAlign: 'justify',

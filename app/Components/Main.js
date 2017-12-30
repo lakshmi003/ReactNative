@@ -3,11 +3,6 @@ import {Text,Image, Button, View, StyleSheet} from 'react-native';
 
 export default class Main extends Component {
     
-    constructor() {
-        super();
-        this.goToScreen = this.goToScreen.bind(this)
-    }
-
     static navigationOptions = {
         title: 'Tarpan Application',
         headerTitleStyle :{textAlign: 'center',alignSelf:'center', color:'white'},
@@ -26,14 +21,6 @@ export default class Main extends Component {
                 </View>
             </View>
         );
-    }
-
-    goToScreen(screen) {
-        if(screen == 'signIn') {
-            this.props.navigation.navigate('HomeScreen',{name : 'world', info : this.state})
-        } else {
-            this.props.navigation.navigate('SignUpScreen',{name : 'world', info : this.state})
-        }
     }
 }
 

@@ -73,7 +73,7 @@ export default class Login extends Component {
             result => {
                 if(result.success){
                     Alert.alert(result.message);
-                    this.props.navigation.navigate('HomeScreen',{deviceId:this.deviceId, mobileNo:this.mobileNo})
+                    this.props.navigation.navigate('HomeScreen',{deviceId:this.deviceId, mobileNo:this.state.mobileNo})
                 } else {
                     Alert.alert(result.message);
                 }
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     },
     groupText : {
         flexDirection: 'row',
-        justifyContent: 'space-between',        
+        justifyContent: 'space-between',
         padding : 3
     },
     textInput: {

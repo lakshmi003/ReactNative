@@ -7,10 +7,34 @@ export default class TarpanVideo extends Component {
     constructor() {
         super();
         this.state = {
-            url : "https://vjs.zencdn.net/v/oceans.mp4"
+            url : ''
         }
+        this.urlList = [];
+        this.urlSize = 0;
+        this.currentUrlIndex = 0;
     }
     
+    componentWillMount() {
+        fetch('https://rzub7yd2r6.execute-api.us-east-1.amazonaws.com/tarpan_video_url',{
+            method:'POST',
+            headers:{
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify(this.props.navigation.state.params)
+        })
+        .then((response) => response.json())
+        .then((responseJson) => {
+            this.urlList = responseJson.payLoad; 
+            this.urlSize = responseJson.payLoad.length;
+            this.setState({url : this.urlList[this.currentUrlIndex].Link})
+            console.log('urlsList :: ', this.urlList);
+            console.log('currentUrlIndex :: ', this.currentUrlIndex);
+        })
+        .catch((error) => {
+            Alert.alert.error(error);
+        });
+    }
     /*static navigationOptions = {
         title: 'Home',
         headerTitleStyle :{textAlign: 'center',alignSelf:'center'},
@@ -20,7 +44,16 @@ export default class TarpanVideo extends Component {
     };*/    
 
     end(e) {
-        this.setState({url : "https://s3.ap-south-1.amazonaws.com/arunprasad/Get+Hip+with+JHipster-+Spring+Boot+++AngularJS+++Bootstrap+by+Matt+Raible.mp4"});
+        if(this.currentUrlIndex != this.urlList.length-1){
+              this.currentUrlIndex += 1;
+              this.setState({url : this.urlList[this.currentUrlIndex].Link});
+              console.log('stateOnIF :: ', this.state);
+        } else {
+            this.currentUrlIndex = 0;
+            this.setState({url : this.urlList[this.currentUrlIndex].Link});
+            console.log('stateOnElse :: ', this.state);
+        }
+        console.log('currentUrlIndex :: ', this.currentUrlIndex);
     }
 
     render() {
@@ -61,6 +94,7 @@ export default class TarpanVideo extends Component {
                 controls = {true}
                 onEnd={this.end.bind(this)}           // Callback when playback finishes 
                 onError={this.videoError}
+                //https://s3.amazonaws.com/tarpan-videos/amavasa.mp4
                 //playInBackground={false}     // Audio continues to play when aentering background.
                 //playWhenInactive={false}     // [iOS] Video continues to play whcontrol or notification center are shown.
                 //onLoadStart={this.loadStart} // Callback when video starts to load
@@ -79,7 +113,6 @@ var styles = StyleSheet.create({
       top: 0,
       left: 0,
       bottom: 0,
-      right: 0,
-      backgroundColor : 'red'
+      right: 0
     },
   });

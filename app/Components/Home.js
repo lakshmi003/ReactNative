@@ -1,39 +1,37 @@
 import React, {Component} from 'react';
-import {View, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, Image, StyleSheet, Dimensions, Button} from 'react-native';
+
+var width = Dimensions.get('window').width;
 
 export default class Home extends Component {
-    
-    goToScreen(name) {
-        switch(name) {
-            case "video":
-                this.props.navigation.navigate('VideoScreen');
-                break;
-            case "horoscope":
-                this.props.navigation.navigate('horoscopeScreen');
-                break;    
-        }
-    }
 
+    static navigationOptions = {
+        headerRight: <View style={{alignItems : 'flex-end'}}>
+                        <Image source={require('../images/settings.png')}></Image>
+                    </View>
+    };
+    
+    constructor(props) {
+        super(props)
+        this.deviceId = this.props.navigation.state.params.deviceId;
+        this.mobileNo = this.props.navigation.state.params.mobileNo;
+    }
+    
     render() {
         return (
             <View>
-                <View style={{alignItems : 'flex-end'}}>
-                    <Image source={require('../images/settings.png')}></Image>
-                </View>
                 <View style={style.align}>
-                    <View style={style.container}>
-                        <TouchableOpacity onPress={() => this.goToScreen('video')} style={style.imgBackground}>
-                            <Image source={require('../images/starttarpan.png')} style={{flex:1}}></Image>
+                    <View style={[style.container,style.col]}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('StartTarpanScreen',{deviceId:this.deviceId, mobileNo:this.mobileNo})} style={style.box}>
+                            <Image source={require('../images/starttarpan.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.goToScreen('video')} style={style.imgBackground}>
+                        <TouchableOpacity style={style.box}>
                             <Image source={require('../images/guidedtour.png')}></Image>
                         </TouchableOpacity>
-                    </View>
-                    <View style={style.container}>
-                        <TouchableOpacity onPress={() => this.goToScreen('horoscope')} style={style.imgBackground}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('HoroscopeScreen',{deviceId:this.deviceId, mobileNo:this.mobileNo})} style={style.box}>
                             <Image source={require('../images/horoscope.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.goToScreen('video')} style={style.imgBackground}>
+                        <TouchableOpacity onPress={() =>this.props.navigation.navigate('VideoScreen',{deviceId:this.deviceId, mobileNo:this.mobileNo})} style={style.box}>
                             <Image source={require('../images/video.png')}></Image>
                         </TouchableOpacity>
                     </View>
@@ -41,23 +39,24 @@ export default class Home extends Component {
             </View>
         );
     }
+
 }
 
 const style = StyleSheet.create({
-    imgBackground : {
-        backgroundColor: '#DDDDDD',
-        height:'100%'
-    },    
     align : {
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop : 45,
+        marginTop:'35%'
     },
     container : {
+        justifyContent: 'center',
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '55%',
-        paddingTop : 50        
+        flexWrap: 'wrap'
+    },
+    box: {
+        height:90,
+        margin:8,
+        width: (width/2-50),
+        alignItems:'center',
+        justifyContent: 'center',
+        backgroundColor: '#DDDDDD'
     }
-
 })

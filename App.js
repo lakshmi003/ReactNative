@@ -8,6 +8,8 @@ import TarpanVideo from './app/Components/TarpanVideo'
 import Home from './app/Components/Home';
 import Horoscope from './app/Components/Horoscope';
 import HoroscopeResult from './app/Components/HoroscopeResult';
+import StartTarpan from './app/Components/StartTarpan';
+import VideoList from './app/Components/VideoList';
 
 export default class App extends Component {
   render() {
@@ -24,6 +26,8 @@ const AppNavigator = StackNavigator({
   RegisterScreen: { screen: Register},
   VideoScreen: { screen: TarpanVideo},
   HomeScreen: { screen: Home},
-  horoscopeScreen: {screen: Horoscope},
-  horoscopeResultScreen: {screen: HoroscopeResult}
+  HoroscopeScreen: {screen: Horoscope},
+  HoroscopeResultScreen: {screen: HoroscopeResult},
+  StartTarpanScreen : {screen: StartTarpan},
+  VideoListScreen: {screen: VideoList}
 })
