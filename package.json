@@ -12,7 +12,9 @@
     "react-native-device-info": "^0.13.0",
     "react-native-loading-spinner-overlay": "^0.5.2",
     "react-native-select-input-ios": "^1.1.4",
+    "react-native-vector-icons": "^4.4.3",
     "react-native-video": "^2.0.0",
+    "react-native-video-player": "^0.8.6",
     "react-navigation": "^1.0.0-beta.21"
   },
   "devDependencies": {

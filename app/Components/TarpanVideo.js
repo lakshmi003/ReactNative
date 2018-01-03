@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-import {Text, View, StyleSheet} from 'react-native'
+import {Text, View, StyleSheet, Alert, ScrollView, FlatList, TouchableOpacity} from 'react-native'
 import Video from 'react-native-video'
 import Spinner from 'react-native-loading-spinner-overlay'
+import VideoPlayer from 'react-native-video-player';
 
 export default class TarpanVideo extends Component {
 
@@ -9,14 +10,14 @@ export default class TarpanVideo extends Component {
         super();
         this.state = {
             url : '',
-            visible : true
+            visible : false
         }
         this.urlList = [];
         this.urlSize = 0;
         this.currentUrlIndex = 0;
     }
     
-    componentWillMount() {
+    componentDidMount() {
         fetch('https://rzub7yd2r6.execute-api.us-east-1.amazonaws.com/tarpan_video_url',{
             method:'POST',
             headers:{
@@ -30,8 +31,6 @@ export default class TarpanVideo extends Component {
             this.urlList = responseJson.payLoad; 
             this.urlSize = responseJson.payLoad.length;
             this.setState({url : this.urlList[this.currentUrlIndex].Link})
-            console.log('urlsList :: ', this.urlList);
-            console.log('currentUrlIndex :: ', this.currentUrlIndex);
         })
         .catch((error) => {
             Alert.alert.error(error);
@@ -42,40 +41,63 @@ export default class TarpanVideo extends Component {
         if(this.currentUrlIndex != this.urlList.length-1){
               this.currentUrlIndex += 1;
               this.setState({url : this.urlList[this.currentUrlIndex].Link});
-              console.log('stateOnIF :: ', this.state);
         } else {
             this.currentUrlIndex = 0;
             this.setState({url : this.urlList[this.currentUrlIndex].Link});
-            console.log('stateOnElse :: ', this.state);
         }
-        console.log('currentUrlIndex :: ', this.currentUrlIndex);
     }
 
     hidespinner() {
         this.setState({visible : false});
     }
 
+    showSpinner() {
+        this.setState({visible : true});   
+    }
+
     render() {
         return (
-            <View style={{ flex: 1 }}>
-                <Spinner visible={this.state.visible} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
-                <Video
-                    source={{uri: this.state.url}} // Can be a URL or a local file.
+            <ScrollView>
+                <View>
+                    <Spinner visible={this.state.visible} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+                </View>
+                <VideoPlayer
+                    video={{ uri: this.state.url }}
                     rate={1.0}                   // 0 is paused, 1 is normal.
                     volume={1.0}                 // 0 is muted, 1 is normal.
                     muted={false}                // Mutes the audio entirely.
-                    paused={false}               // Pauses playback entirely.
-                    resizeMode="stretch"           // Fill the whole screen at aspect ratio.
-                    repeat={false}
-                    setControls={true}
-                    controls = {true}
+                    videoWidth={70}
+                    videoHeight={40}
+                    controlsTimeout={3000}
+                    playInBackground= {true}
                     onEnd={this.end.bind(this)}           // Callback when playback finishes 
                     onError={this.videoError}
-                    onLoad={this.hidespinner.bind(this)}    // Callback when video loads
-                    style={styles.backgroundVideo}
+                    onLoad={this.hidespinner.bind(this)}
+                    onLoadStart={this.showSpinner.bind(this)}
+                    loop={true}   // Callback when video loads
+                />                
+                <FlatList
+                    data={this.urlList}
+                    extraData={this.state}
+                    renderItem={({item,index}) => this.renderFlatListItem(item,index)}                        
                 />
-            </View>            
+            </ScrollView>            
         );
+    }
+
+    renderFlatListItem(item,index) {
+        let itemBgColor = index==this.currentUrlIndex ? '#ff4c00' : '#DDDDDD';
+        let textColor = index==this.currentUrlIndex ? 'white' : 'black';
+        return (
+            <TouchableOpacity onPress={() => this.changeVideoURL(index)}>
+                <Text style={[styles.item, {backgroundColor:itemBgColor}, {color:textColor}]}>{item.Link} : {index}</Text>
+            </TouchableOpacity>    
+        );
+    }
+
+    changeVideoURL(index) {
+        this.currentUrlIndex = index;
+        this.setState({url:this.urlList[this.currentUrlIndex].Link})
     }
 }
 var styles = StyleSheet.create({
@@ -86,4 +108,13 @@ var styles = StyleSheet.create({
       bottom: 0,
       right: 0
     },
+    container :{
+        padding:15        
+    },
+    item : {
+        padding:20,
+        borderBottomWidth:1,
+        borderColor:'white'
+
+    }
   });
