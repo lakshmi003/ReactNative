@@ -63,20 +63,19 @@ export default class TarpanVideo extends Component {
                 </View>
                 <VideoPlayer
                     video={{ uri: this.state.url }}
-                    rate={1.0}                   // 0 is paused, 1 is normal.
-                    volume={1.0}                 // 0 is muted, 1 is normal.
+                    rate={1.0}
+                    volume={1.0}
                     muted={false}
-                    defaultMuted={false}                // Mutes the audio entirely.
                     videoWidth={70}
                     videoHeight={40}
                     controlsTimeout={3000}
                     playInBackground= {true}
-                    onEnd={this.end.bind(this)}           // Callback when playback finishes 
+                    onEnd={this.end.bind(this)}
                     onError={this.videoError}
                     onLoad={this.hidespinner.bind(this)}
                     onLoadStart={this.showSpinner.bind(this)}
                     ignoreSilentSwitch={"ignore"}
-                    loop={true}   // Callback when video loads
+                    loop={true}
                 />                
                 <FlatList
                     data={this.urlList}

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Text, View, Picker, TouchableOpacity, ScrollView, Switch, StyleSheet, Dimensions, Button, Alert} from 'react-native'
-import SelectInput from 'react-native-select-input-ios'
+import { Dropdown } from 'react-native-material-dropdown';
 
 var width = Dimensions.get('window').width;
 export default class StartTarpan extends Component {
@@ -51,7 +51,6 @@ export default class StartTarpan extends Component {
     
     getCountryOptions() {
         return [
-            { value: '', label: ''},
             { value: 'India', label: 'India'},
             { value: 'United States', label: 'United States'}
         ];
@@ -60,14 +59,12 @@ export default class StartTarpan extends Component {
     getSuthramOptions() {
         if(this.state.vedam == "rig"){
             return [
-                { value: '', label: ''},
                 { value: 'Asvalayana Sutra', label: 'Asvalayana Sutra'},
                 { value: 'Sankhayana Sutra', label: 'Sankhayana Sutra'},
                 { value: 'Saunaka Sutra', label: 'Saunaka Sutra'}
             ];
         } else if(this.state.vedam == "yajur") {
             return [
-                { value: '', label: ''},
                 { value: 'Apastamba', label: 'Apastamba'},
                 { value: 'Baudhayana', label: 'Baudhayana'},
                 { value: 'Bharadvaja', label: 'Bharadvaja'},
@@ -76,7 +73,6 @@ export default class StartTarpan extends Component {
             ];
         } else {
             return [
-                { value: '', label: ''},
                 { value: 'Drahyayana', label: 'Drahyayana'},
                 { value: 'Latyayana', label: 'Latyayana'}
             ];
@@ -142,12 +138,12 @@ export default class StartTarpan extends Component {
         if(this.state.vedam) {
             return(
                 <View>
-                    <View>
-                        <Text style={style.rowPadded}>Suthram</Text>
-                        <SelectInput
+                    <View style={style.rowPadded}>
+                        <Dropdown
+                            label='Suthram'
                             value={this.state.suthram}
-                            options={this.getSuthramOptions()}
-                            onSubmitEditing={this.onSubmitEditingSuthram.bind(this)}
+                            data={this.getSuthramOptions()}
+                            onChangeText={this.onSubmitEditingSuthram.bind(this)}
                         />
                     </View>
                     <View style={[style.switch, style.rowPadded]}>
@@ -175,12 +171,12 @@ export default class StartTarpan extends Component {
         return(
             <ScrollView>
                 <Text style={{textAlign : 'center'}}>Basic Details</Text>
-                <View>
-                    <Text style={style.rowPadded}>Country</Text>
-                    <SelectInput
+                <View style={style.rowPadded}>
+                    <Dropdown
+                        label='Country'
                         value={this.state.country}
-                        options={this.getCountryOptions()}
-                        onSubmitEditing={this.onSubmitEditingCountry.bind(this)}
+                        data={this.getCountryOptions()}
+                        onChangeText={this.onSubmitEditingCountry.bind(this)}
                     />
                 </View>
                 <View>

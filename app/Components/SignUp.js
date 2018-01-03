@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, TextInput, Button, StyleSheet, Picker, Image, ScrollView, Alert, KeyboardAvoidingView, Platform, ActionSheetIOS} from 'react-native'
 import DeviceInfo from 'react-native-device-info';
+import { Dropdown } from 'react-native-material-dropdown';
 
 export default class SignUp extends Component {
 
@@ -15,6 +16,16 @@ export default class SignUp extends Component {
         this.deviceId = DeviceInfo.getUniqueID();
     }
 
+    getCountryOptions() {
+        return [
+            { value: 'India', label: 'India'},
+            { value: 'United States', label: 'United States'}
+        ];
+    }
+
+    onSubmitEditingCountry(value) {
+        this.setState({country: value});
+    }
     //let countryOption = ['India','United States','Cancel'];
     renderVerificationCodeElements() {
         if(this.state.showVerificationElements) {
@@ -73,13 +84,12 @@ export default class SignUp extends Component {
                     </View>    
                     <View>
                         <View style={styles.rowPadded}>
-                            <Text>Country</Text>
-                            <Picker
-                                selectedValue={this.state.country}
-                                onValueChange={(itemValue, itemIndex) => this.setState({country: itemValue})}>
-                                <Picker.Item label="India" value="india" />
-                                <Picker.Item label="United States" value="us" />
-                            </Picker>
+                            <Dropdown
+                                label='Country'
+                                value={this.state.country}
+                                data={this.getCountryOptions()}
+                                onChangeText={this.onSubmitEditingCountry.bind(this)}
+                            />
                         </View>
                         <View style={styles.rowPadded}>
                             <Text>Phone</Text>
