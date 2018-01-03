@@ -72,10 +72,9 @@ export default class Login extends Component {
         ).then(
             result => {
                 if(result.success){
-                    Alert.alert(result.message);
                     this.props.navigation.navigate('HomeScreen',{deviceId:this.deviceId, mobileNo:this.state.mobileNo})
                 } else {
-                    Alert.alert(result.message);
+                    Alert.alert(result.errorMessage);
                 }
             }
         )           
