@@ -29,7 +29,10 @@ export default class HoroscopeResult extends Component {
             })            
         })
         .catch((error) => {
-            Alert.alert.error(error);
+            this.setState({
+                visible: false
+            })
+            Alert.alert(error.message)
         });
     }
 

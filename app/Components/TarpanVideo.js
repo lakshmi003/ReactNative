@@ -65,7 +65,8 @@ export default class TarpanVideo extends Component {
                     video={{ uri: this.state.url }}
                     rate={1.0}                   // 0 is paused, 1 is normal.
                     volume={1.0}                 // 0 is muted, 1 is normal.
-                    muted={false}                // Mutes the audio entirely.
+                    muted={false}
+                    defaultMuted={false}                // Mutes the audio entirely.
                     videoWidth={70}
                     videoHeight={40}
                     controlsTimeout={3000}
@@ -74,6 +75,7 @@ export default class TarpanVideo extends Component {
                     onError={this.videoError}
                     onLoad={this.hidespinner.bind(this)}
                     onLoadStart={this.showSpinner.bind(this)}
+                    ignoreSilentSwitch={"ignore"}
                     loop={true}   // Callback when video loads
                 />                
                 <FlatList
@@ -114,7 +116,6 @@ var styles = StyleSheet.create({
     item : {
         padding:20,
         borderBottomWidth:1,
-        borderColor:'white'
-
+        borderColor : 'white'
     }
   });
