@@ -18,17 +18,8 @@ export default class HoroscopeResult extends Component {
 
    static navigationOptions = ({navigation}) => ({
     title: `${navigation.state.params.name.toUpperCase()}`,
-  })
-
-    /*static navigationOptions = {
-        header: (props) => ({
-            title: this.name,
-            headerTitleStyle :{textAlign: 'center',alignSelf:'center'},
-            headerStyle:{
-                backgroundColor:'white',
-            }
-        })
-    }*/
+    headerTitleStyle :{textAlign: 'center',alignSelf:'center'}
+  })    
 
     componentWillMount() {
         fetch('http://sandipbgt.com/theastrologer/api/horoscope/'+this.name+'/today/')
@@ -40,7 +31,8 @@ export default class HoroscopeResult extends Component {
                 intensity : responseJson.meta.intensity,
                 keywords : responseJson.meta.keywords,
                 mood : responseJson.meta.mood,
-                visible: false
+                visible: false,
+                date: responseJson.date
             })            
         })
         .catch((error) => {
@@ -54,19 +46,25 @@ export default class HoroscopeResult extends Component {
     render() {
         return (
             <View>
-                <Image source={this.props.navigation.state.params.imgSrc}></Image>
+                <View style={styles.container}>
+                    <Image  source={this.props.navigation.state.params.imgSrc}></Image>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.textright}>{this.state.date}</Text>
+                        <Text style={styles.textright}>by Pankaj khanna</Text>
+                    </View>
+                </View>    
                 <View style={{ flex: 1 }}>
                     <Spinner visible={this.state.visible} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
                 </View>
                 <View>
                     <Text style={styles.text}>{this.state.description}</Text>
                 </View>
-                <View style={styles.group}>
+                {/*<View style={styles.group}>
                     <Text style={styles.text}>Intensity: {this.state.intensity}</Text>
                     <Text style={styles.text}>Keywords: {this.state.keywords}</Text>
                     <Text style={styles.text}>Mood: {this.state.mood}</Text>
-                </View>
-                <View style={{justifyContent: 'space-between', paddingTop:100, flexDirection: 'column'}}>
+                </View>*/}
+                <View style={{flex:1,justifyContent: 'space-between', flexDirection: 'column'}}>
                     <Text style={{fontSize:12, textAlign:'center'}}>
                         (c) Kelli Fox, The Astrologer, http://new.theastrologer.com
                     </Text>
@@ -78,12 +76,25 @@ export default class HoroscopeResult extends Component {
 const styles = StyleSheet.create({
     text: {        
         textAlign: 'justify',
-        //lineHeight: 15,
+        lineHeight: 25,
         padding:15,
         fontSize:15
     },
     group: {
         alignItems : 'flex-end',
         paddingTop : 70
+    },
+    container: {
+        flexDirection:'row',
+        padding:15
+    },
+    textright: {    
+        alignSelf: 'flex-start',
+        paddingLeft:60,
+        lineHeight:25
+    },    
+    textContainer: {
+        flex:1,
+        alignSelf: 'center'
     }
 })

@@ -140,6 +140,7 @@ export default class StartTarpan extends Component {
                 <View>
                     <View style={style.rowPadded}>
                         <Dropdown
+                            dropdownPosition={2}
                             label='Suthram'
                             value={this.state.suthram}
                             data={this.getSuthramOptions()}
@@ -173,6 +174,7 @@ export default class StartTarpan extends Component {
                 <Text style={{textAlign : 'center'}}>Basic Details</Text>
                 <View style={style.rowPadded}>
                     <Dropdown
+                        dropdownPosition={1}
                         label='Country'
                         value={this.state.country}
                         data={this.getCountryOptions()}

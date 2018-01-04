@@ -85,6 +85,7 @@ export default class SignUp extends Component {
                     <View>
                         <View style={styles.rowPadded}>
                             <Dropdown
+                                dropdownPosition={1}
                                 label='Country'
                                 value={this.state.country}
                                 data={this.getCountryOptions()}
