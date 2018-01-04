@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {Text, Alert, StyleSheet, View} from 'react-native';
+import {Text, Alert, StyleSheet, View, Image} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay'
 
 export default class HoroscopeResult extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             description: '',
             intensity: '',
@@ -13,10 +13,25 @@ export default class HoroscopeResult extends Component {
             mood: '',
             visible: true
         }
+        this.name = this.props.navigation.state.params.name;
     }
 
+   static navigationOptions = ({navigation}) => ({
+    title: `${navigation.state.params.name.toUpperCase()}`,
+  })
+
+    /*static navigationOptions = {
+        header: (props) => ({
+            title: this.name,
+            headerTitleStyle :{textAlign: 'center',alignSelf:'center'},
+            headerStyle:{
+                backgroundColor:'white',
+            }
+        })
+    }*/
+
     componentWillMount() {
-        fetch('http://sandipbgt.com/theastrologer/api/horoscope/'+this.props.navigation.state.params.name+'/today/')
+        fetch('http://sandipbgt.com/theastrologer/api/horoscope/'+this.name+'/today/')
         .then((response) => response.json())
         .then((responseJson) => {
             let index = responseJson.horoscope.lastIndexOf('(c)');
@@ -39,6 +54,7 @@ export default class HoroscopeResult extends Component {
     render() {
         return (
             <View>
+                <Image source={this.props.navigation.state.params.imgSrc}></Image>
                 <View style={{ flex: 1 }}>
                     <Spinner visible={this.state.visible} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
                 </View>
@@ -62,8 +78,9 @@ export default class HoroscopeResult extends Component {
 const styles = StyleSheet.create({
     text: {        
         textAlign: 'justify',
-        lineHeight: 30,
-        padding:5
+        //lineHeight: 15,
+        padding:15,
+        fontSize:15
     },
     group: {
         alignItems : 'flex-end',

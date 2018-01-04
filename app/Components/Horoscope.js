@@ -42,7 +42,7 @@ export default class Horoscope extends Component {
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('HoroscopeResultScreen',{name:'aquarius'})} style={style.box}>
                             <Image source={require('../images/aquarius.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('HoroscopeResultScreen',{name:'pisces'})} style={style.box}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('HoroscopeResultScreen',{name:'pisces', imgSrc:require('../images/pisces.png')})} style={style.box}>
                             <Image source={require('../images/pisces.png')}></Image>
                         </TouchableOpacity>
                     </View>
