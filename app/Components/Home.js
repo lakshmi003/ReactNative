@@ -39,7 +39,7 @@ export default class Home extends Component {
                         <Text style={styles.text}>HOROSCOPE</Text>
                         <Text style={styles.subText}>5 ITEMS</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() =>this.props.navigation.navigate('VideoScreen',{deviceId:this.deviceId, mobileNo:this.mobileNo})} style={styles.box}>
+                    <TouchableOpacity style={styles.box}>
                         <Image source={require('../images/video.png')}></Image>
                         <Text style={styles.text}>VIDEOS</Text>
                         <Text style={styles.subText}>5 VIDEOS</Text>

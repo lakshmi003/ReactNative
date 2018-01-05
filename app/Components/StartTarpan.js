@@ -20,6 +20,11 @@ export default class StartTarpan extends Component {
         this.mobileNo = this.props.navigation.state.params.mobileNo;
     }
 
+    static navigationOptions = ({navigation}) => ({
+        title: 'Basic Details',
+        headerTitleStyle :{textAlign: 'center',alignSelf:'center'}
+      })
+
     onPress() {
         fetch('https://j4xfrxok30.execute-api.us-east-1.amazonaws.com/tarpan_basic_details',{
             method: 'POST',
@@ -124,8 +129,8 @@ export default class StartTarpan extends Component {
                 samaTc : this.state.vedam == 'sama' ? 'white' : 'black',
             }
             return(
-                <View style={[style.section, {height:150}]}>
-                    <Text style={{padding:15,fontWeight:'bold'}}>Vedam</Text>
+                <View style={style.section}>
+                    <Text style={{padding:3,fontWeight:'bold'}}>Vedam</Text>
                     <View style={style.menus}>
                         <TouchableOpacity onPress={() => this.setSelectedvedam('rig')}  style={[style.menuContent, {backgroundColor:vedam.rigBg, width: (width/2-100)}]}>
                             <Text style={{color:vedam.rigTc, textAlign:'center'}}>RIG</Text>
@@ -159,11 +164,7 @@ export default class StartTarpan extends Component {
                                 onChangeText={this.onSubmitEditingSuthram.bind(this)}
                             />
                         </View>
-                    </View>
-                    <View style={[style.switch]}>
-                        <Text style={{left: 20,fontWeight:'bold'}}>IsYourMotherAlive</Text>
-                        <Switch style={{left: 180}} onValueChange={(value)=> this.setSwitchState(value)} value={this.state.isMotherAlive}></Switch>  
-                    </View>
+                    </View>                    
                 </View>
             );
         } else {
@@ -189,7 +190,7 @@ export default class StartTarpan extends Component {
                         <View style={[style.section]}>
                             <View style={{paddingLeft:20, paddingRight: 20}}>
                                 <Dropdown
-                                    dropdownPosition={1}
+                                    dropdownPosition={-3.1}
                                     label='Country'
                                     value={this.state.country}
                                     data={this.getCountryOptions()}
@@ -197,9 +198,9 @@ export default class StartTarpan extends Component {
                                 />
                             </View>
                         </View>
-                        <View style={[style.section, {height:250}]}>
-                            <Text style={{padding:15,fontWeight:'bold'}}>Caste</Text>
-                            <View style={[style.menus, {flexWrap: 'wrap',}]}>
+                        <View style={style.section}>
+                            <Text style={{padding:5,fontWeight:'bold'}}>Caste</Text>
+                            <View style={[style.menus, {flexWrap: 'wrap'}]}>
                                 <TouchableOpacity onPress={() => this.setSelectedCaste('iyer')} style={[style.menuContent, {backgroundColor: caste.iyerBg, width: (width/2-70)}]}>
                                     <Text style={{color:caste.iyerTc, textAlign:'center'}}>IYER</Text>
                                 </TouchableOpacity>
@@ -218,46 +219,14 @@ export default class StartTarpan extends Component {
                         {this.renderSuthram()}
                     </View>
                 </ScrollView>
+                <View style={[style.switch]}>
+                    <Text style={{left: 15,fontWeight:'bold'}}>IsYourMotherAlive</Text>
+                    <Switch style={{left: 180}} onTintColor='#ff4c00' onValueChange={(value)=> this.setSwitchState(value)} value={this.state.isMotherAlive}></Switch>  
+                </View>
                 <View style={{margin:10}}>
                     <Button onPress={() => this.onPress()} title='NEXT' color='#ff4c00'></Button>
                 </View>
             </View>
-            /*<ScrollView>
-                <Text style={{textAlign : 'center'}}>Basic Details</Text>
-                <View style={style.rowPadded}>
-                    <Dropdown
-                        dropdownPosition={1}
-                        label='Country'
-                        value={this.state.country}
-                        data={this.getCountryOptions()}
-                        onChangeText={this.onSubmitEditingCountry.bind(this)}
-                    />
-                </View>
-                <View>
-                    <Text style={style.rowPadded}>Caste</Text>
-                    <View style={style.align}>
-                        <View style={[style.container]}>
-                            <TouchableOpacity onPress={() => this.setSelectedCaste('iyer')} style={[style.box,{backgroundColor: caste.iyerBg}]}>
-                                <Text style={{color:caste.iyerTc}}>IYER</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.setSelectedCaste('iyengar')} style={[style.box,{backgroundColor: caste.iyengarBg}]}>
-                                <Text style={{color:caste.iyengarTc}}>IYENGAR</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.setSelectedCaste('teluguBrahmin')} style={[style.box,{backgroundColor: caste.tBrahminBg}]}>
-                                <Text style={{color:caste.tBrahminTc}}>TELUGU BRAHMIN</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() =>this.setSelectedCaste('others')} style={[style.box,{backgroundColor: caste.othersBg}]}>
-                                <Text style={{color:caste.othersTc}}>OTHERS</Text>
-                            </TouchableOpacity>
-                        </View>                    
-                    </View>
-                </View>
-                {this.renderVedam()}
-                {this.renderSuthram()}
-                <View style={style.rowPadded}>
-                    <Button onPress={() => this.onPress()} title='NEXT' color='#ff4c00'></Button>
-                </View>
-            </ScrollView>*/   
         ); 
     }
 }
@@ -267,14 +236,14 @@ const style = StyleSheet.create({
         flex: 1,
         alignItems: 'stretch',
         justifyContent: 'center',
-        backgroundColor: 'lightgrey',
+        backgroundColor: '#DDDDDD',
       },
     content: {
         justifyContent: 'space-between',
     },
     section:{
         backgroundColor: 'white',
-        margin:10,
+        margin:7,
         borderRadius: 10,
     },
     menus:{
@@ -286,9 +255,9 @@ const style = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 4,
-        borderWidth: 0.5,
+        borderWidth: 1.5,
         borderColor: '#ff4c00',
-        height: 70,
+        height: 50,
         margin:10,
     },
     switch: {
