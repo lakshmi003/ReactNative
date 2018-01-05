@@ -124,20 +124,18 @@ export default class StartTarpan extends Component {
                 samaTc : this.state.vedam == 'sama' ? 'white' : 'black',
             }
             return(
-                <View>
-                    <Text style={style.rowPadded}>Vedam</Text>
-                    <View style={style.align}>
-                        <View style={style.container}>
-                            <TouchableOpacity onPress={() => this.setSelectedvedam('rig')} style={[style.box, style.vedamBox, {backgroundColor:vedam.rigBg}]}>
-                                <Text style={{color:vedam.rigTc}}>RIG</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.setSelectedvedam('yajur')} style={[style.box, style.vedamBox, {backgroundColor:vedam.yajurBg}]}>
-                                <Text style={{color:vedam.yajurTc}}>YAJUR</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.setSelectedvedam('sama')} style={[style.box, style.vedamBox, {backgroundColor:vedam.samaBg}]}>
-                                <Text style={{color:vedam.samaTc}}>SAMA</Text>
-                            </TouchableOpacity>
-                        </View>                    
+                <View style={[style.section, {height:150}]}>
+                    <Text style={{padding:15,fontWeight:'bold'}}>Vedam</Text>
+                    <View style={style.menus}>
+                        <TouchableOpacity onPress={() => this.setSelectedvedam('rig')}  style={[style.menuContent, {backgroundColor:vedam.rigBg, width: (width/2-100)}]}>
+                            <Text style={{color:vedam.rigTc, textAlign:'center'}}>RIG</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.setSelectedvedam('yajur')} style={[style.menuContent, {backgroundColor:vedam.yajurBg, width: (width/2-100)}]}>
+                            <Text style={{color:vedam.yajurTc, textAlign:'center'}}>YAJUR</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.setSelectedvedam('sama')} style={[style.menuContent, {backgroundColor:vedam.samaBg, width: (width/2-100)}]}>
+                            <Text style={{color:vedam.samaTc, textAlign:'center'}}>SAMA</Text>
+                        </TouchableOpacity> 
                     </View>
                 </View>
             );
@@ -151,18 +149,20 @@ export default class StartTarpan extends Component {
             let dropdownPosition = this.state.vedam == 'sama' ? 1 : 2
             return(
                 <View>
-                    <View style={style.rowPadded}>
-                        <Dropdown
-                            dropdownPosition={dropdownPosition}
-                            label='Suthram'
-                            value={this.state.suthram}
-                            data={this.getSuthramOptions()}
-                            onChangeText={this.onSubmitEditingSuthram.bind(this)}
-                        />
+                    <View style={[style.section]}>
+                        <View style={{paddingLeft:20, paddingRight: 20}}>
+                            <Dropdown
+                                dropdownPosition={dropdownPosition}
+                                label='Suthram'
+                                value={this.state.suthram}
+                                data={this.getSuthramOptions()}
+                                onChangeText={this.onSubmitEditingSuthram.bind(this)}
+                            />
+                        </View>
                     </View>
-                    <View style={[style.switch, style.rowPadded]}>
-                        <Text>IsYourMotherAlive</Text>
-                        <Switch style={{paddingRight: 50}} onValueChange={(value)=> this.setSwitchState(value)} value={this.state.isMotherAlive}></Switch>
+                    <View style={[style.switch]}>
+                        <Text style={{left: 20,fontWeight:'bold'}}>IsYourMotherAlive</Text>
+                        <Switch style={{left: 180}} onValueChange={(value)=> this.setSwitchState(value)} value={this.state.isMotherAlive}></Switch>  
                     </View>
                 </View>
             );
@@ -183,7 +183,46 @@ export default class StartTarpan extends Component {
             othersTc : this.state.caste == 'others' ? 'white' : 'black'
         }        
         return(
-            <ScrollView>
+            <View style={[style.container]}>
+                <ScrollView>
+                    <View style={style.content}>
+                        <View style={[style.section]}>
+                            <View style={{paddingLeft:20, paddingRight: 20}}>
+                                <Dropdown
+                                    dropdownPosition={1}
+                                    label='Country'
+                                    value={this.state.country}
+                                    data={this.getCountryOptions()}
+                                    onChangeText={this.onSubmitEditingCountry.bind(this)}
+                                />
+                            </View>
+                        </View>
+                        <View style={[style.section, {height:250}]}>
+                            <Text style={{padding:15,fontWeight:'bold'}}>Caste</Text>
+                            <View style={[style.menus, {flexWrap: 'wrap',}]}>
+                                <TouchableOpacity onPress={() => this.setSelectedCaste('iyer')} style={[style.menuContent, {backgroundColor: caste.iyerBg, width: (width/2-70)}]}>
+                                    <Text style={{color:caste.iyerTc, textAlign:'center'}}>IYER</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.setSelectedCaste('iyengar')}  style={[style.menuContent, {backgroundColor: caste.iyengarBg, width: (width/2-70)}]}>
+                                    <Text style={{color:caste.iyengarTc, textAlign:'center'}}> IYENGAR</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.setSelectedCaste('teluguBrahmin')} style={[style.menuContent, {backgroundColor: caste.tBrahminBg, width: (width/2-70)}]}>
+                                    <Text style={{color:caste.tBrahminTc, textAlign:'center'}}> TELUGU BRAHMIN</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() =>this.setSelectedCaste('others')} style={[style.menuContent, {backgroundColor: caste.othersBg, width: (width/2-70)}]}>
+                                    <Text style={{color:caste.othersTc, textAlign:'center'}}> OTHERS</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        {this.renderVedam()}
+                        {this.renderSuthram()}
+                    </View>
+                </ScrollView>
+                <View style={{margin:10}}>
+                    <Button onPress={() => this.onPress()} title='NEXT' color='#ff4c00'></Button>
+                </View>
+            </View>
+            /*<ScrollView>
                 <Text style={{textAlign : 'center'}}>Basic Details</Text>
                 <View style={style.rowPadded}>
                     <Dropdown
@@ -218,37 +257,43 @@ export default class StartTarpan extends Component {
                 <View style={style.rowPadded}>
                     <Button onPress={() => this.onPress()} title='NEXT' color='#ff4c00'></Button>
                 </View>
-            </ScrollView>    
+            </ScrollView>*/   
         ); 
     }
 }
 
 const style = StyleSheet.create({
-    align : {
-        marginTop:'2%'
-    },
     container : {
+        flex: 1,
+        alignItems: 'stretch',
         justifyContent: 'center',
+        backgroundColor: 'lightgrey',
+      },
+    content: {
+        justifyContent: 'space-between',
+    },
+    section:{
+        backgroundColor: 'white',
+        margin:10,
+        borderRadius: 10,
+    },
+    menus:{
         flexDirection: 'row',
-        flexWrap: 'wrap'
+        alignItems: 'center',
+        justifyContent: 'center',  
     },
-    box: {
-        height:70,
-        margin:12,
-        marginTop:'0.5%',
-        width: (width/2-55),
-        alignItems:'center',
-        justifyContent: 'space-around'
-    },
-    vedamBox: {
-        width: (width/3-25)
+    menuContent:{
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 4,
+        borderWidth: 0.5,
+        borderColor: '#ff4c00',
+        height: 70,
+        margin:10,
     },
     switch: {
         justifyContent: 'flex-start',
         flexDirection: 'row',
-        flexWrap: 'wrap'
-    },
-    rowPadded : {
-        padding : 5
+        alignItems: 'center',
     }
 })

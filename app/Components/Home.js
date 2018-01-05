@@ -5,12 +5,6 @@ var width = Dimensions.get('window').width;
 
 export default class Home extends Component {
 
-    static navigationOptions = {
-        headerRight: <View style={{alignItems : 'flex-end'}}>
-                        <Image source={require('../images/settings.png')}></Image>
-                    </View>
-    };
-    
     constructor(props) {
         super(props)
         this.deviceId = this.props.navigation.state.params.deviceId;
@@ -19,7 +13,10 @@ export default class Home extends Component {
 
     static navigationOptions = ({navigation}) => ({
         title: 'Home',
-        headerTitleStyle :{textAlign: 'center',alignSelf:'center'}
+        headerTitleStyle :{textAlign: 'center',alignSelf:'center'},
+        headerRight: <View style={{alignItems : 'flex-end'}}>
+                        <Image source={require('../images/settings.png')}></Image>
+                    </View>
       })
     
     render() {

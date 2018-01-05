@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, Alert, StyleSheet, View, Image} from 'react-native';
+import {Text, Alert, StyleSheet, View, Image, ScrollView} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay'
 
 export default class HoroscopeResult extends Component {
@@ -45,26 +45,28 @@ export default class HoroscopeResult extends Component {
 
     render() {
         return (
-            <View>
-                <View style={styles.container}>
-                    <Image  source={this.props.navigation.state.params.imgSrc}></Image>
+            <View style={styles.container}>
+                <ScrollView>
                     <View style={styles.textContainer}>
-                        <Text style={styles.textright}>{this.state.date}</Text>
-                        <Text style={styles.textright}>by Pankaj khanna</Text>
+                        <Image  source={this.props.navigation.state.params.imgSrc}></Image>
+                        <View>
+                            <Text style={styles.textright}>{this.state.date}</Text>
+                            <Text style={styles.textright}>by Pankaj khanna</Text>
+                        </View>
+                    </View>    
+                    <View style={{ flex: 1 }}>
+                        <Spinner visible={this.state.visible} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
                     </View>
-                </View>    
-                <View style={{ flex: 1 }}>
-                    <Spinner visible={this.state.visible} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
-                </View>
-                <View>
-                    <Text style={styles.text}>{this.state.description}</Text>
-                </View>
-                {/*<View style={styles.group}>
-                    <Text style={styles.text}>Intensity: {this.state.intensity}</Text>
-                    <Text style={styles.text}>Keywords: {this.state.keywords}</Text>
-                    <Text style={styles.text}>Mood: {this.state.mood}</Text>
-                </View>*/}
-                <View style={{flex:1,justifyContent: 'space-between', flexDirection: 'column'}}>
+                    <View>
+                        <Text style={styles.text}>{this.state.description}</Text>
+                    </View>
+                    {/*<View style={styles.group}>
+                        <Text style={styles.text}>Intensity: {this.state.intensity}</Text>
+                        <Text style={styles.text}>Keywords: {this.state.keywords}</Text>
+                        <Text style={styles.text}>Mood: {this.state.mood}</Text>
+                    </View>*/}
+                </ScrollView>
+                <View style={{padding:20}}>
                     <Text style={{fontSize:12, textAlign:'center'}}>
                         (c) Kelli Fox, The Astrologer, http://new.theastrologer.com
                     </Text>
@@ -85,8 +87,10 @@ const styles = StyleSheet.create({
         paddingTop : 70
     },
     container: {
-        flexDirection:'row',
-        padding:15
+        flex: 1,
+        alignItems: 'stretch',
+        justifyContent: 'center',
+        backgroundColor: 'white',
     },
     textright: {    
         alignSelf: 'flex-start',
@@ -94,7 +98,9 @@ const styles = StyleSheet.create({
         lineHeight:25
     },    
     textContainer: {
-        flex:1,
-        alignSelf: 'center'
+        flex:2,
+        alignSelf: 'flex-start',
+        flexDirection: 'row',
+        padding: 30
     }
 })
