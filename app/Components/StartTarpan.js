@@ -3,6 +3,8 @@ import {Text, View, Picker, TouchableOpacity, ScrollView, Switch, StyleSheet, Di
 import { Dropdown } from 'react-native-material-dropdown';
 
 var width = Dimensions.get('window').width;
+let currentDate = new Date();
+let currentDateString =  currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate()
 export default class StartTarpan extends Component {
     
     constructor(props) {
@@ -41,7 +43,14 @@ export default class StartTarpan extends Component {
         ).then(
             result => {
                 if(result.success){
-                    this.props.navigation.navigate('VideoScreen',{DeviceId : this.deviceId, MobileNo : this.mobileNo, Info: {Country: this.state.country, IsYourMotherAlive: this.state.isMotherAlive}})
+                    let infoObj = { Country:this.state.country,
+                        Caste:this.state.caste,
+                        Veaam:this.state.vedam,
+                        Suthram:this.state.suthram,
+                        IsYourMotherAlive:this.state.isMotherAlive
+                      }
+                    let jsonObj  = {DeviceId : this.deviceId, MobileNo : this.mobileNo, CurrentDate : currentDateString, Info : infoObj}
+                    this.props.navigation.navigate('VideoScreen',jsonObj)
                 } else {
                     Alert.alert(result.message);                    
                 }
@@ -90,7 +99,10 @@ export default class StartTarpan extends Component {
     }
 
     setSelectedvedam(value) {
-        this.setState({vedam:value});
+        this.setState({
+            vedam:value,
+            suthram:''
+        });
     }
 
     setSelectedCaste(value) {
@@ -136,11 +148,12 @@ export default class StartTarpan extends Component {
 
     renderSuthram() {
         if(this.state.vedam) {
+            let dropdownPosition = this.state.vedam == 'sama' ? 1 : 2
             return(
                 <View>
                     <View style={style.rowPadded}>
                         <Dropdown
-                            dropdownPosition={2}
+                            dropdownPosition={dropdownPosition}
                             label='Suthram'
                             value={this.state.suthram}
                             data={this.getSuthramOptions()}
