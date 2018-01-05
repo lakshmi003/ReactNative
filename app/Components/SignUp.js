@@ -108,7 +108,14 @@ export default class SignUp extends Component {
     }
 
     submit() {
-        console.log('this.deviceId :: ', this.deviceId);
+        let mobileNo;
+        let countryCode;
+        if(this.state.country=='India'){
+            mobileNo = '91' + this.state.mobileNo
+        } else if(this.state.country=='United States') {
+            mobileNo = '1' + this.state.mobileNo;
+        }
+        console.log('this.deviceId :: ', mobileNo);
         fetch("https://kba9cd3ow3.execute-api.us-east-1.amazonaws.com/tarpan_registration",{
             method:'POST',
             headers:{
@@ -116,7 +123,7 @@ export default class SignUp extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                MobileNo: this.state.mobileNo,
+                MobileNo: mobileNo,
                 DeviceId: this.deviceId,
             })
         }).then(
