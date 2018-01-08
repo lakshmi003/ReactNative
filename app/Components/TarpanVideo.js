@@ -12,10 +12,10 @@ export default class TarpanVideo extends Component {
         this.state = {
             url : '',
             visible : false,
-            isdownloaded:false
+            isdownloaded:false,
+            mantramName : ''
         }
         this.urlList = [];
-        this.urlSize = 0;
         this.currentUrlIndex = 0;
         this.filePath = '';
         this.pathIndex=0;
@@ -34,8 +34,6 @@ export default class TarpanVideo extends Component {
         .then((response) => response.json())
         .then((responseJson) => {
             this.urlList = responseJson.payLoad; 
-            this.urlSize = responseJson.payLoad.length;
-            console.log(this.urlSize)
             this.downloadFileFromUrlToPath();
             //this.setState({url : this.urlList[this.currentUrlIndex].Link})
         })
@@ -46,6 +44,9 @@ export default class TarpanVideo extends Component {
 
     componentWillUnmount() {
         this.mounted = false;
+        RNFetchBlob.fs.unlink('res.path()')
+        .then(() => {console.log('Erased')})
+        .catch((err) => {console.log('not erased')})
       }
 
     downloadFileFromUrlToPath() {
@@ -68,14 +69,11 @@ export default class TarpanVideo extends Component {
                 this.pathIndex = urlIndex;
                 if(this.state.isdownloaded== false){
                     this.setState({
+                        mantramName:'Mantram 1',
                         isdownloaded : true,
                         url:res.path()
                     });
                 }
-            } else {
-                RNFetchBlob.fs.unlink(res.path())
-                .then(() => {console.log('Erased')})
-                .catch((err) => {console.log('not erased')})
             }            
         })
     }
@@ -87,12 +85,19 @@ export default class TarpanVideo extends Component {
         if(this.currentUrlIndex != this.urlList.length-1){
             this.currentUrlIndex += 1;  
             let path = this.pathIndex == this.currentUrlIndex ? this.filePath : this.urlList[this.currentUrlIndex].Link;
-            this.setState({url : path});
+            this.setState({
+                url : path,
+                mantramName:'Manthram '+(this.currentUrlIndex+1)
+            });
         } else {
             this.currentUrlIndex = 0;
             let path = this.pathIndex == this.currentUrlIndex ? this.filePath : this.urlList[this.currentUrlIndex].Link;
-            this.setState({url : path});
+            this.setState({
+                url : path,
+                mantramName:'Manthram '+(this.currentUrlIndex+1)
+            });
         }
+        console.log('URL :: ',this.urlList[this.currentUrlIndex].Link)
     }
 
     hidespinner() {
@@ -108,6 +113,7 @@ export default class TarpanVideo extends Component {
         if(this.state.isdownloaded) {
             return(
                 <View>
+                    <Text style={{alignSelf:'center', color:'#ff4c00'}}>{this.state.mantramName}</Text>
                     <VideoPlayer
                         video={{ uri: this.state.url }}
                         rate={1.0}
