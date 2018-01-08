@@ -44,9 +44,9 @@ export default class TarpanVideo extends Component {
 
     componentWillUnmount() {
         this.mounted = false;
-        RNFetchBlob.fs.unlink('res.path()')
+        /*RNFetchBlob.fs.unlink('res.path()')
         .then(() => {console.log('Erased')})
-        .catch((err) => {console.log('not erased')})
+        .catch((err) => {console.log('not erased')})*/
       }
 
     downloadFileFromUrlToPath() {
@@ -69,10 +69,14 @@ export default class TarpanVideo extends Component {
                 this.pathIndex = urlIndex;
                 if(this.state.isdownloaded== false){
                     this.setState({
-                        mantramName:'Mantram 1',
+                        mantramName:'Manthram 1',
                         isdownloaded : true,
                         url:res.path()
                     });
+                } else {
+                    RNFetchBlob.fs.unlink('res.path()')
+                    .then(() => {console.log('Erased')})
+                    .catch((err) => {console.log('not erased')})
                 }
             }            
         })

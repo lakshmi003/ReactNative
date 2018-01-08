@@ -50,6 +50,12 @@ export default class SignUp extends Component {
     }
 
     verifyOTP() {
+        let mobileNo;
+        if(this.state.country=='India'){
+            mobileNo = '91' + this.state.mobileNo
+        } else if(this.state.country=='United States') {
+            mobileNo = '1' + this.state.mobileNo;
+        }
         fetch("https://18i2sf2855.execute-api.us-east-1.amazonaws.com/tarpan_verification",{
             method : 'POST',
             headers:{
@@ -57,7 +63,7 @@ export default class SignUp extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                MobileNo: this.state.mobileNo,
+                MobileNo: mobileNo,
                 DeviceId: this.deviceId,
                 code : this.state.code
             })
@@ -67,7 +73,8 @@ export default class SignUp extends Component {
             result => {
                 if(result.success){
                     Alert.alert(result.message);
-                    this.props.navigation.navigate('RegisterScreen',{deviceId : this.deviceId, mobileNo : this.state.mobileNo})
+                    let countryCode = this.state.country=='India' ? '91' : '1';
+                    this.props.navigation.navigate('RegisterScreen',{deviceId : this.deviceId, mobileNo : this.state.mobileNo,code:countryCode})
                 } else {
                     Alert.alert(result.message);                    
                 }
@@ -109,7 +116,6 @@ export default class SignUp extends Component {
 
     submit() {
         let mobileNo;
-        let countryCode;
         if(this.state.country=='India'){
             mobileNo = '91' + this.state.mobileNo
         } else if(this.state.country=='United States') {

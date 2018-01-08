@@ -1,10 +1,17 @@
 import React, {Component} from 'react'
-import {Text, View, Picker, TouchableOpacity, ScrollView, Switch, StyleSheet, Dimensions, Button, Alert} from 'react-native'
+import {Text, View, Picker, TouchableOpacity, ScrollView, Switch, StyleSheet, Dimensions, Button, Alert, AsyncStorage} from 'react-native'
 import { Dropdown } from 'react-native-material-dropdown';
 
 var width = Dimensions.get('window').width;
 let currentDate = new Date();
-let currentDateString =  currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate()
+let currentDateString =  setCurrentDate();
+
+function setCurrentDate() {
+    let month = currentDate.getMonth() < 10 ? '0' + (currentDate.getMonth()+1) : currentDate.getMonth()+1
+    let date = currentDate.getDate() < 10 ? '0' + currentDate.getDate() : currentDate.getDate()
+    return currentDate.getFullYear() + '-' + month + '-' + date
+}
+
 export default class StartTarpan extends Component {
     
     constructor(props) {
@@ -55,6 +62,7 @@ export default class StartTarpan extends Component {
                         IsYourMotherAlive:this.state.isMotherAlive
                       }
                     let jsonObj  = {DeviceId : this.deviceId, MobileNo : this.mobileNo, CurrentDate : currentDateString, Info : infoObj}
+                    AsyncStorage.setItem('tarpanInfo',JSON.stringify(jsonObj));
                     this.props.navigation.navigate('VideoScreen',jsonObj)
                 } else {
                     Alert.alert(result.message);                    
@@ -221,7 +229,7 @@ export default class StartTarpan extends Component {
                 </ScrollView>
                 <View style={[style.switch]}>
                     <Text style={{left: 15,fontWeight:'bold'}}>IsYourMotherAlive</Text>
-                    <Switch style={{left: 180}} onTintColor='#ff4c00' onValueChange={(value)=> this.setSwitchState(value)} value={this.state.isMotherAlive}></Switch>  
+                    {/*<Switch style={{left: 180}} onTintColor='#ff4c00' onValueChange={(value)=> this.setSwitchState(value)} value={this.state.isMotherAlive}></Switch>*/}
                 </View>
                 <View style={{margin:10}}>
                     <Button onPress={() => this.onPress()} title='NEXT' color='#ff4c00'></Button>

@@ -37,7 +37,7 @@ export default class Login extends Component {
                     <View>
                         <View style={styles.rowPadded}>
                             <Text>Password</Text>
-                            <TextInput ref='password' value={this.state.password} onChangeText={(value)=> this.onChangeText('password',value)} style={styles.textInput}></TextInput>
+                            <TextInput ref='password' value={this.state.password} onChangeText={(value)=> this.onChangeText('password',value)} secureTextEntry={true} style={styles.textInput}></TextInput>
                         </View>
                     </View>
                     <View style={styles.rowPadded}>

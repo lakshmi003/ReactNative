@@ -11,6 +11,7 @@ export default class Register extends Component {
         }
         this.deviceId = this.props.navigation.state.params.deviceId;
         this.mobileNo = this.props.navigation.state.params.mobileNo;
+        this.countryCode = this.props.navigation.state.params.code;
     }
 
     onChangeText(value, inputName) {
@@ -30,7 +31,7 @@ export default class Register extends Component {
             },
             body : JSON.stringify ({
                 DeviceId : this.deviceId,
-                MobileNo : this.mobileNo,
+                MobileNo : this.countryCode + this.mobileNo,
                 Info : {
                     UserName: this.state.name,
                     EmailId: this.state.email,
