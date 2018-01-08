@@ -22,6 +22,7 @@ export default class TarpanVideo extends Component {
     }
     
     componentDidMount() {
+        this.mounted=true;
         fetch('https://rzub7yd2r6.execute-api.us-east-1.amazonaws.com/tarpan_video_url',{
             method:'POST',
             headers:{
@@ -34,6 +35,7 @@ export default class TarpanVideo extends Component {
         .then((responseJson) => {
             this.urlList = responseJson.payLoad; 
             this.urlSize = responseJson.payLoad.length;
+            console.log(this.urlSize)
             this.downloadFileFromUrlToPath();
             //this.setState({url : this.urlList[this.currentUrlIndex].Link})
         })
@@ -42,9 +44,11 @@ export default class TarpanVideo extends Component {
         });
     }
 
+    componentWillUnmount() {
+        this.mounted = false;
+      }
+
     downloadFileFromUrlToPath() {
-        console.log('this.currentUrlIndex :: ', this.currentUrlIndex);
-        console.log('this.link :: ', this.urlList[this.currentUrlIndex].Link);
         let urlIndex = this.currentUrlIndex != this.urlList.length-1 && this.state.isdownloaded ? this.currentUrlIndex+1 : 0
         RNFetchBlob
         .config({
@@ -58,20 +62,25 @@ export default class TarpanVideo extends Component {
         })
         .then((res) => {
             // the temp file path
-            console.log('The file saved to ', res.path())
-            this.filePath = res.path();
-            this.pathIndex = urlIndex;
-            if(this.state.isdownloaded== false){
-                this.setState({
-                    isdownloaded : true,
-                    url:res.path()
-                });
-            }
+            if(this.mounted) {
+                console.log('The file saved to ', res.path())
+                this.filePath = res.path();
+                this.pathIndex = urlIndex;
+                if(this.state.isdownloaded== false){
+                    this.setState({
+                        isdownloaded : true,
+                        url:res.path()
+                    });
+                }
+            } else {
+                RNFetchBlob.fs.unlink(res.path())
+                .then(() => {console.log('Erased')})
+                .catch((err) => {console.log('not erased')})
+            }            
         })
     }
 
     end(e) {
-        console.log('The file deleted ', this.state.url)
         RNFetchBlob.fs.unlink(this.state.url)
         .then(() => {console.log('Erased')})
         .catch((err) => {console.log('not erased')})
@@ -84,8 +93,6 @@ export default class TarpanVideo extends Component {
             let path = this.pathIndex == this.currentUrlIndex ? this.filePath : this.urlList[this.currentUrlIndex].Link;
             this.setState({url : path});
         }
-        console.log(this.currentUrlIndex);
-        console.log(this.pathIndex);
     }
 
     hidespinner() {
@@ -117,26 +124,32 @@ export default class TarpanVideo extends Component {
                         ignoreSilentSwitch={"ignore"}
                         loop={true}
                     />
-                    <FlatList
-                        data={this.urlList}
-                        extraData={this.state}
-                        renderItem={({item,index}) => this.renderFlatListItem(item,index)}                        
-                    />
+                    <ScrollView style={{height:350}}>
+                        <FlatList
+                            data={this.urlList}
+                            extraData={this.state}
+                            renderItem={({item,index}) => this.renderFlatListItem(item,index)}                        
+                        />
+                    </ScrollView>
                 </View>    
             );
         } else {
-            return null;
+            return (
+                <View style={styles.textcontainer}>
+                    <Text style={{alignSelf:'center'}}>Please wait..</Text>
+                </View>    
+            );
         }
     }
 
     render() {
         return (
-            <ScrollView>
+            <View>
                 <View>
                     <Spinner visible={this.state.visible} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
                 </View>
                 {this.renderVideoPlayer()}                
-            </ScrollView>            
+            </View>            
         );
     }
 
@@ -145,7 +158,7 @@ export default class TarpanVideo extends Component {
         let textColor = index==this.currentUrlIndex ? 'white' : 'black';
         return (
             <TouchableOpacity onPress={() => this.changeVideoURL(index)}>
-                <Text style={[styles.item, {backgroundColor:itemBgColor}, {color:textColor}]}>{item.Link} : {index}</Text>
+                <Text style={[styles.item, {backgroundColor:itemBgColor}, {color:textColor}]}>Manthram {index+1}</Text>
             </TouchableOpacity>    
         );
     }
@@ -170,5 +183,10 @@ var styles = StyleSheet.create({
         padding:20,
         borderBottomWidth:1,
         borderColor : 'white'
+    },
+    textcontainer: {
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        //flex:1,
     }
   });
