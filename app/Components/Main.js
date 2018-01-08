@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, AsyncStorage} from 'react';
 import {Text,Image, Button, View, StyleSheet} from 'react-native';
 
 export default class Main extends Component {
