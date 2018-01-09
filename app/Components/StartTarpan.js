@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Text, View, Picker, TouchableOpacity, ScrollView, StyleSheet, Dimensions, Button, Alert, AsyncStorage} from 'react-native'
 import { Dropdown } from 'react-native-material-dropdown';
 import { Switch } from 'react-native-switch';
+import RNFetchBlob from 'react-native-fetch-blob'
 
 var width = Dimensions.get('window').width;
 let currentDate = new Date();
@@ -39,6 +40,11 @@ export default class StartTarpan extends Component {
                 isMotherAlive:tarpanInfo.Info.IsYourMotherAlive
             })
         }
+
+        let link = '/data/data/com.tarpan/files/';
+        RNFetchBlob.fs.unlink(link)
+        .then(() => {console.log('Erased')})
+        .catch((err) => {console.log('not erased')})
     }
 
     static navigationOptions = ({navigation}) => ({

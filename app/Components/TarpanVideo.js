@@ -44,9 +44,10 @@ export default class TarpanVideo extends Component {
 
     componentWillUnmount() {
         this.mounted = false;
-        /*RNFetchBlob.fs.unlink('res.path()')
+        let link = '/data/data/com.tarpan/files/';
+        RNFetchBlob.fs.unlink(link)
         .then(() => {console.log('Erased')})
-        .catch((err) => {console.log('not erased')})*/
+        .catch((err) => {console.log('not erased')})
       }
 
     downloadFileFromUrlToPath() {

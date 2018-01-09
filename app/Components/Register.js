@@ -42,7 +42,6 @@ export default class Register extends Component {
         ).then(
             result => {
                 if(result.success){
-                    Alert.alert(result.message);
                     this.props.navigation.navigate('HomeScreen',{deviceId:this.deviceId, mobileNo:this.mobileNo})
                 } else {
                     Alert.alert(result.message);
