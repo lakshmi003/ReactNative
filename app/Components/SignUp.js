@@ -72,9 +72,7 @@ export default class SignUp extends Component {
         ).then(
             result => {
                 if(result.success){
-                    Alert.alert(result.message);
-                    let countryCode = this.state.country=='India' ? '91' : '1';
-                    this.props.navigation.navigate('RegisterScreen',{deviceId : this.deviceId, mobileNo : this.state.mobileNo,code:countryCode})
+                    this.props.navigation.navigate('RegisterScreen',{deviceId : this.deviceId, mobileNo : mobileNo})
                 } else {
                     Alert.alert(result.message);                    
                 }
