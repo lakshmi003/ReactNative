@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import {Text, View, Picker, TouchableOpacity, ScrollView, Switch, StyleSheet, Dimensions, Button, Alert, AsyncStorage} from 'react-native'
+import {Text, View, Picker, TouchableOpacity, ScrollView, StyleSheet, Dimensions, Button, Alert, AsyncStorage} from 'react-native'
 import { Dropdown } from 'react-native-material-dropdown';
+import { Switch } from 'react-native-switch';
 
 var width = Dimensions.get('window').width;
 let currentDate = new Date();
@@ -25,6 +26,19 @@ export default class StartTarpan extends Component {
         }
         this.deviceId = this.props.navigation.state.params.deviceId;
         this.mobileNo = this.props.navigation.state.params.mobileNo;
+    }
+
+    componentWillMount() {
+        let tarpanInfo = this.props.navigation.state.params.info;
+        if(tarpanInfo) {
+            this.setState({
+                country : tarpanInfo.Info.Country,
+                suthram: tarpanInfo.Info.Suthram,
+                caste:tarpanInfo.Info.Caste,
+                vedam:tarpanInfo.Info.Veaam,
+                isMotherAlive:tarpanInfo.Info.IsYourMotherAlive
+            })
+        }
     }
 
     static navigationOptions = ({navigation}) => ({
@@ -229,6 +243,20 @@ export default class StartTarpan extends Component {
                 </ScrollView>
                 <View style={[style.switch]}>
                     <Text style={{left: 15,fontWeight:'bold'}}>IsYourMotherAlive</Text>
+                    <View style={{left: 170}}>
+                        <Switch
+                            value={this.state.isMotherAlive}
+                            onValueChange={(value)=> this.setSwitchState(value)}
+                            disabled={false}
+                            activeText={''}
+                            inActiveText={''}
+                            circleSize={30}
+                            backgroundActive={'#ff4c00'}
+                            backgroundInactive={'gray'}
+                            circleActiveColor={'white'}
+                            circleInActiveColor={'white'}
+                        />
+                    </View>
                     {/*<Switch style={{left: 180}} onTintColor='#ff4c00' onValueChange={(value)=> this.setSwitchState(value)} value={this.state.isMotherAlive}></Switch>*/}
                 </View>
                 <View style={{margin:10}}>

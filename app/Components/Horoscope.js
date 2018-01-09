@@ -28,7 +28,7 @@ export default class Horoscope extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('HoroscopeResultScreen',{name:'leo',imgSrc:require('../images/leo.png')})} style={style.box}>
                             <Image source={require('../images/leo.png')}></Image>
-                            <Text style={style.text}>LOE</Text>
+                            <Text style={style.text}>LEO</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('HoroscopeResultScreen',{name:'virgo',imgSrc:require('../images/virgo.png')})} style={style.box}>
                             <Image source={require('../images/virgo.png')}></Image>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation'
+import {AsyncStorage, View} from 'react-native'
 import Main from './app/Components/Main'
 import Login from './app/Components/Login'
 import SignUp from './app/Components/SignUp';
@@ -12,14 +13,39 @@ import StartTarpan from './app/Components/StartTarpan';
 import VideoList from './app/Components/VideoList';
 
 export default class App extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      routename : ''
+    }
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem('tarpanInfo').then((value) => {
+      console.log('value :: ', value);
+      this.setState({
+        routename : value != null ? 'HomeScreen' : 'MainScreen'
+      })
+    })
+  }
+
   render() {
-    return(
-      <AppNavigator />
-    );
+    if(this.state.routename == 'HomeScreen') {
+      return(
+        <HomeNavigator />
+      );
+    } else if(this.state.routename == 'MainScreen') {
+      return(
+        <AppNavigator />
+      );
+    }
+    else {
+      return null;
+    }
   }
 }
-
-const AppNavigator = StackNavigator({
+let tarpanScreens = {
   MainScreen: {screen: Main},
   SignUpScreen: {screen: SignUp},
   LoginScreen: {screen: Login},
@@ -30,4 +56,17 @@ const AppNavigator = StackNavigator({
   HoroscopeResultScreen: {screen: HoroscopeResult},
   StartTarpanScreen : {screen: StartTarpan},
   VideoListScreen: {screen: VideoList}
-})
+}
+const HomeNavigator = StackNavigator(
+  tarpanScreens,
+  {
+    initialRouteName:'HomeScreen'
+  }
+)
+
+const AppNavigator = StackNavigator(
+  tarpanScreens,
+  {
+    initialRouteName:'MainScreen'
+  }
+)
